@@ -7,7 +7,7 @@ public class TrainStation {
     private Train trackA; // Trenton
     private Train trackB; // Charlotte
     private Train trackC; // Baltimore
-    private List<TrainCar> trackD; // Other destinations
+    private Stack<TrainCar> trackD; // Other destinations
     
     private int limitTrackA;
     private int limitTrackB;
@@ -16,7 +16,7 @@ public class TrainStation {
     public TrainStation(int limitA, int limitB, int limitC) {
         mainLine = new LinkedList<>();
         inspectionTrack = new LinkedList<>();
-        trackD = new ArrayList<>();
+        trackD = new Stack<>();
         this.limitTrackA = limitA;
         this.limitTrackB = limitB;
         this.limitTrackC = limitC;
@@ -27,15 +27,18 @@ public class TrainStation {
     }
     
     public void readInput(String filename) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filename));
-        String line;
+        File textFile = new File(filename);
+        Scanner fileReader = new Scanner(textFile);
         
-        while ((line = br.readLine()) != null) {
-            line = line.trim();
+        while (fileReader.hasNextLine()) {
+            String line = fileReader.nextLine();
             if (line.equals("END")) break;
             
             if (line.startsWith("CAR")) {
-                String[] parts = line.split("\\s+");
+                String[] parts = new String[6];
+                i[0] = line.substring(3);
+                for(int i = 1; i < 6; i++))
+                    parts[i] = fileReader.nextLine();
                 String carNumber = parts[0];
                 String contents = parts[1];
                 String origin = parts[2];
@@ -47,12 +50,12 @@ public class TrainStation {
                                            destination, weight, miles);
                 mainLine.add(car);
             } else if (line.startsWith("ENG")) {
-                String engineNumber = line;
-                String destination = br.readLine().trim();
+                String engineNumber = line.substring(3);
+                String destination = fileReader.nextLine();
                 mainLine.add(new String[]{engineNumber, destination});
             }
         }
-        br.close();
+        fileReader.close();
     }
     
     public void processCars() {
@@ -115,7 +118,7 @@ public class TrainStation {
                 trackC.addCar(car);
             }
         } else {
-            trackD.add(car);
+            trackD.push(car);
         }
     }
     
@@ -166,7 +169,7 @@ public class TrainStation {
     
     private void printStatus() {
         System.out.println("\nStation Status:");
-        if (trackD.isEmpty()) {
+        if (trackD.empty()) {
             System.out.println("Track D (Other Destinations): Empty");
         } else {
             System.out.println("Track D (Other Destinations):");

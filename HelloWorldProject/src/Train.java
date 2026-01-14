@@ -3,14 +3,14 @@ import java.util.*;
 public class Train {
     private String engineNumber;
     private String destination;
-    private List<TrainCar> cars;
+    private Queue<TrainCar> cars;
     private int totalWeight;
     private int weightLimit;
     
     public Train(String destination, int weightLimit) {
         this.engineNumber = "ENG00000";
         this.destination = destination;
-        this.cars = new ArrayList<>();
+        this.cars = new LinkedList<>();
         this.totalWeight = 0;
         this.weightLimit = weightLimit;
     }
@@ -18,7 +18,7 @@ public class Train {
     public Train(String engineNumber, String destination) {
         this.engineNumber = engineNumber;
         this.destination = destination;
-        this.cars = new ArrayList<>();
+        this.cars = new LinkedList<>();
         this.totalWeight = 0;
         this.weightLimit = Integer.MAX_VALUE;
     }
@@ -33,7 +33,7 @@ public class Train {
     }
     
     public String getDestination() { return destination; }
-    public List<TrainCar> getCars() { return cars; }
+    public Queue<TrainCar> getCars() { return cars; }
     public int getTotalWeight() { return totalWeight; }
     public boolean isEmpty() { return cars.isEmpty(); }
     
